@@ -1,0 +1,55 @@
+#include "max6675.h"
+
+int thermoDO = 4;
+int thermoCS = 5;
+int thermoCLK = 6;
+
+float tempDesired = 88; //set me!
+
+MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
+
+void setup() {
+  Serial.begin(9600);
+
+  Serial.println("MAX6675 test");
+  // wait for MAX chip to stabilize
+  delay(500);
+
+  //get water into the system? not sure how
+
+  //turn on heater
+  while (thermocouple.readCelsius() < tempDesired) {
+  Serial.println("Heating...");
+  delay(1000);
+  }
+}
+
+void loop() {
+  /*while (make coffee button is not pressed) {
+    ;
+  } */
+
+  if (thermocouple.readCelsius() < tempDesired) { //if under the desired temperature respond as such 
+    Serial.println("Not hot enough yet :(");
+  }
+  else {
+    //
+  }
+
+
+
+
+
+
+
+
+
+
+  // basic readout test, just print the current temp
+
+  Serial.print("C = "); 
+  Serial.println(thermocouple.readCelsius());
+
+  // For the MAX6675 to update, you must delay AT LEAST 250ms between reads!
+  delay(1000);
+}
