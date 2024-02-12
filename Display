@@ -1,0 +1,8 @@
+// https://forum.arduino.cc/t/newhaven-20x2-display-nhd-c0220biz-fsw-fbw-3v3m-confused-by-datasheet/611194
+// Newhaven LCD
+
+
+// https://www.elecrow.com/wiki/index.php?title=LCD_Keypad_Shield
+// LCD Keypad shield
+// Uses all (?) slots so idk if it's useful. Has buttons but would need a dual arduino setup and the screen is broken :(
+
