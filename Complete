@@ -4,45 +4,46 @@ int thermoDO = 4;
 int thermoCS = 5;
 int thermoCLK = 6;
 
-float tempDesired = 88; //set me!
+const float tempDesired = 30; //set me!
 
 MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
 
+const int HeaterPin = 10;
+const int PumpPin = 13;
+
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600); 
+
+  //Int the pins for relays
+  pinMode(HeaterPin, OUTPUT);
+  pinMode(PumpPin, OUTPUT);
 
   Serial.println("MAX6675 test");
   // wait for MAX chip to stabilize
   delay(500);
 
-  //get water into the system? not sure how
-
-  //turn on heater
-  while (thermocouple.readCelsius() < tempDesired) {
+  digitalWrite(HeaterPin, HIGH); //turn on heater 
   Serial.println("Heating...");
   delay(1000);
-  }
 }
 
 void loop() {
-  /*while (make coffee button is not pressed) {
-    ;
-  } */
-
   if (thermocouple.readCelsius() < tempDesired) { //if under the desired temperature respond as such 
     Serial.println("Not hot enough yet :(");
   }
-  else {
-    //
+  else { //make coffee :)
+    digitalWrite(PumpPin, HIGH); //turn on pump
+    Serial.println("PumpOn");
+    delay(100000);
+    
+    //turn off both heater and pump
+    digitalWrite(HeaterPin, LOW);
+    digitalWrite(PumpPin, LOW);
+    Serial.println("BothOff");
+
+    //wait before brewing again
+    delay(10000);
   }
-
-
-
-
-
-
-
-
 
 
   // basic readout test, just print the current temp
@@ -51,5 +52,5 @@ void loop() {
   Serial.println(thermocouple.readCelsius());
 
   // For the MAX6675 to update, you must delay AT LEAST 250ms between reads!
-  delay(1000);
+  delay(500);
 }
